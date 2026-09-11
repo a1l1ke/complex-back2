@@ -39,3 +39,5 @@ out/
 .env
 
 logs/
+
+alertmanager.yml

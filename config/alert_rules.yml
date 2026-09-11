@@ -5,7 +5,8 @@ groups:
       # 1. 서버 다운 (30초 이상)
       - alert: InstanceDown
         # 평가식 (expression -> metric으로 계산되는 상황에 대한 평가)
-        expr: up{job="spring-boot-app"} == 0
+        # expr: up{job="spring-boot-app"} == 0
+        expr: up{instance="app:8080"} == 0
         # 1, 0
         for: 30s
         labels:
