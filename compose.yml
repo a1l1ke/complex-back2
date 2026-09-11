@@ -55,7 +55,8 @@ services:
       # app -> alloy (pull) -> loki (push)
       - log-data:/var/log/app:ro
       # Alloy configuration
-      - ./config/alloy-local.alloy:/etc/alloy/config.alloy:ro
+#      - ./config/alloy-local.alloy:/etc/alloy/config.alloy:ro
+      - ./config/alloy-cloud.alloy:/etc/alloy/config.alloy:ro
       # File read position / Alloy state
       - alloy-data:/var/lib/alloy/data
     command:
@@ -89,7 +90,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+#      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./config/prometheus-cloud.yml:/etc/prometheus/prometheus.yml:ro
       - ./config/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro
     networks:
       - mon-net

@@ -13,10 +13,13 @@ route:
   group_wait: 10s
   group_interval: 1m
   repeat_interval: 1h
-  receiver: 'slack-notifications'
+#  receiver: 'slack-notifications'
+#  receiver: 'email-notifications'
+  receiver: 'notifications'
 
 receivers:
-  - name: 'slack-notifications'
+  - name: 'notifications'
+#  - name: 'slack-notifications'
     slack_configs:
       - api_url: https://hooks.slack.com/services/******/******/******
         send_resolved: true
@@ -25,7 +28,7 @@ receivers:
           *경보 이름*: {{ .CommonLabels.alertname }}
           *심각도*: {{ .CommonLabels.severity }}
           *상세 내용*: {{ .CommonAnnotations.description }}
-#  - name: 'email-notifications' # 별도로 발송 시
+#  - name: 'email-notifications'
     email_configs:
       - to: '******@gmail.com'
         send_resolved: true

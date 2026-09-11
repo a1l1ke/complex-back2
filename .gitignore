@@ -41,3 +41,6 @@ out/
 logs/
 
 alertmanager.yml
+
+alloy-cloud.alloy
+prometheus-cloud.yml
