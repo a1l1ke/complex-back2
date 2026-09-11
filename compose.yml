@@ -1,3 +1,4 @@
+# compose.yml
 services:
   # spring-boot
   app:
@@ -92,6 +93,12 @@ services:
       - mon-net
     depends_on:
       - app
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    restart: always
+    ports:
+      - "9093:9093"
 
 networks:
   mon-net:
