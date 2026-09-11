@@ -1,0 +1,17 @@
+# config/alertmanager.yml
+global:
+  # 5분 동안 정상으로 돌아오면 해결된 것으로 처리
+  resolve_timeout: 5m
+  # mailing ...
+
+route:
+  group_by: ['alertname', 'severity']
+  group_wait: 10s
+  group_interval: 1m
+  repeat_interval: 1h
+  receiver: 'slack-notifications'
+
+receivers:
+  - name: 'slack-notifications'
+#    slack_configs:
+#      -
