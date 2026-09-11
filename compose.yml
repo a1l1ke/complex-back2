@@ -33,15 +33,35 @@ services:
     networks:
       - mon-net
 
-  promtail:
-    image: grafana/promtail:latest
+#  promtail:
+#    image: grafana/promtail:latest
+#    restart: always
+#    volumes:
+#      # app -> promtail (pull) -> loki (push)
+#      - log-data:/var/log/app:ro
+#      - ./config/promtail.yml:/etc/promtail/config.yml:ro
+#    command:
+#      - -config.file=/etc/promtail/config.yml
+#    depends_on:
+#      - loki
+#      - app
+#    networks:
+#      - mon-net
+  alloy:
+    image: grafana/alloy:latest
     restart: always
     volumes:
-      # app -> promtail (pull) -> loki (push)
+      # app -> alloy (pull) -> loki (push)
       - log-data:/var/log/app:ro
-      - ./config/promtail.yml:/etc/promtail/config.yml:ro
+      # Alloy configuration
+      - ./config/alloy-local.alloy:/etc/alloy/config.alloy:ro
+      # File read position / Alloy state
+      - alloy-data:/var/lib/alloy/data
     command:
-      - -config.file=/etc/promtail/config.yml
+      - run
+      - --server.http.listen-addr=0.0.0.0:12345
+      - --storage.path=/var/lib/alloy/data
+      - /etc/alloy/config.alloy
     depends_on:
       - loki
       - app
@@ -59,7 +79,8 @@ services:
     networks:
       - mon-net
     # loki, prometheus -> grafana
-
+    volumes:
+      - grafana-data:/var/lib/grafana
   prometheus:
     image: prom/prometheus:latest
     restart: always
@@ -77,3 +98,5 @@ networks:
 
 volumes:
   log-data:
+  alloy-data:
+  grafana-data:
