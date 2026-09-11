@@ -3,6 +3,10 @@ global:
   # 5분 동안 정상으로 돌아오면 해결된 것으로 처리
   resolve_timeout: 5m
   # mailing ...
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: '******@gmail.com'
+  smtp_auth_username: '******@gmail.com'
+  smtp_auth_password: '******'
 
 route:
   group_by: ['alertname', 'severity']
@@ -21,3 +25,7 @@ receivers:
           *경보 이름*: {{ .CommonLabels.alertname }}
           *심각도*: {{ .CommonLabels.severity }}
           *상세 내용*: {{ .CommonAnnotations.description }}
+#  - name: 'email-notifications' # 별도로 발송 시
+    email_configs:
+      - to: '******@gmail.com'
+        send_resolved: true
